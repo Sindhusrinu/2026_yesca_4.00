@@ -3,6 +3,7 @@ import "./globals.css";
 import { Header } from "./COMPONENTS/Header";
 import SmoothScroll from "./COMPONENTS/SmoothScroll";
 import Footer from "./COMPONENTS/Footer";
+import WhatsAppButton from "./COMPONENTS/WhatsAppButton";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,6 +27,7 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Header />
+        <WhatsAppButton />
         <SmoothScroll>{children}</SmoothScroll>
         <Footer />
       </body>

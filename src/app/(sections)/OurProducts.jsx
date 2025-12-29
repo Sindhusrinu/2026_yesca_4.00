@@ -7,7 +7,7 @@ export default function OurProducts() {
       title: "Healthcare Platforms",
       description:
         "Digital systems for hospital operations, duty doctor workflows and secure clinical data handling.",
-      status: "Available / In progress",
+      status: " In progress",
       statusColor: "green",
     },
     {
@@ -15,7 +15,7 @@ export default function OurProducts() {
       title: "Cybersecurity Platforms",
       description:
         "Threat awareness, simulation and monitoring tools that strengthen everyday security posture.",
-      status: "Available / In progress",
+      status: " In progress",
       statusColor: "green",
     },
     {
