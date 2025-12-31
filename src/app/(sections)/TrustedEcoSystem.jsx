@@ -52,8 +52,7 @@ export default function Clients() {
     {
       name: "Trend Micro",
       logo: "https://cdn.worldvectorlogo.com/logos/trend-micro-logo.svg",
-    },
-    { name: "And more", logo: null },
+    }
   ];
 
   const scrollRef2 = useRef(null);
@@ -139,13 +138,13 @@ export default function Clients() {
 
   return (
     <section className="bg-white py-24 overflow-hidden relative">
-      <div className="max-w-7xl mx-auto mb-16 sm:mb-20">
+      <div className="max-w-7xl mx-auto mb-16 sm:mb-20 px-4 sm:px-6 lg:px-0">
         <div className="text-left">
           <div className="inline-block bg-indigo-50 text-indigo-600 px-3 py-1 rounded-full text-xs sm:text-sm font-semibold mb-4 tracking-wide border border-indigo-100">
             TRUSTED ECOSYSTEM
           </div>
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-gray-900 mb-3 tracking-tight">
-            CLIENTS & PARTNERS
+            PARTNERS
           </h2>
           <p className="text-gray-500 text-sm sm:text-base max-w-2xl leading-relaxed">
             Trusted by organizations that value reliability and long-term

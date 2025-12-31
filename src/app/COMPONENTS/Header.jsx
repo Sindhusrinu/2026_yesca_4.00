@@ -175,7 +175,7 @@ export const Header = () => {
 
       {/* RIGHT PART - CTA Buttons */}
       <div className="hidden lg:flex items-center gap-3 xl:gap-4 flex-shrink-0">
-        <button
+        {/* <button
           onClick={() => handleNavClick({}, "/")}
           ref={(el) => (navLinksRef.current[4] = el)}
           className="font-semibold px-4 xl:px-5 py-2 rounded-full transition-all duration-300 text-xs sm:text-sm lg:text-sm"
@@ -185,8 +185,8 @@ export const Header = () => {
             borderWidth: "2px",
           }}
         >
-          Product-first tech studio
-        </button>
+          Product-first tech studio0
+        </button> */}
         <button
           onClick={() => handleNavClick({}, "/Contact")}
           ref={(el) => (navLinksRef.current[5] = el)}

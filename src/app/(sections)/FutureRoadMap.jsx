@@ -52,17 +52,27 @@ export default function FutureRoadMap() {
         <div className="h-px bg-gray-200 my-16 sm:my-20"></div>
 
         {/* Contact Section */}
-        <div>
-          <span className="text-orange-500 text-xs sm:text-sm font-semibold">
-            Contact
-          </span>
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mt-2 mb-3">
-            Lets talk
-          </h2>
-          <p className="text-sm sm:text-base text-gray-600 max-w-3xl leading-relaxed">
-            Looking to collaborate or pilot a product? Talk to us.
-          </p>
-        </div>
+        <div className="space-y-4">
+      <span className="text-orange-500 text-xs sm:text-sm font-semibold uppercase tracking-wider">
+        Contact
+      </span>
+      
+      <div className="mt-2 mb-4">
+        {/* Wrap the button in an anchor tag for navigation */}
+        <a href="/contact" className="inline-block">
+          <button 
+            className="group relative inline-flex items-center gap-3 px-8 py-4 bg-[#000783] text-white text-lg sm:text-xl font-bold rounded-2xl transition-all duration-300 hover:bg-[#000560] hover:scale-[1.02] hover:shadow-xl active:scale-95"
+          >
+            Let's talk
+           
+          </button>
+        </a>
+      </div>
+
+      <p className="text-sm sm:text-base text-gray-600 max-w-3xl leading-relaxed">
+        Looking to collaborate or pilot a product? Talk to us.
+      </p>
+    </div>
       </div>
     </section>
   );

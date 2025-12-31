@@ -1,46 +1,55 @@
 "use client";
 
+import React from 'react';
+import { ChevronRight } from 'lucide-react';
+
+/**
+ * OurProducts Component
+ * Displays the product grid with "Know More" triggers for specific domain platforms.
+ */
 export default function OurProducts() {
   const products = [
     {
       id: 1,
       title: "Healthcare Platforms",
-      description:
-        "Digital systems for hospital operations, duty doctor workflows and secure clinical data handling.",
-      status: " In progress",
+      description: "Reduces manual hospital coordination.",
+      status: "Early access",
       statusColor: "green",
+      hasKnowMore: true,
+      link: "/healthcare"
     },
     {
       id: 2,
       title: "Cybersecurity Platforms",
-      description:
-        "Threat awareness, simulation and monitoring tools that strengthen everyday security posture.",
-      status: " In progress",
-      statusColor: "green",
+      description: "Improves incident visibility.",
+      status: "In development",
+      statusColor: "orange",
+      hasKnowMore: false
     },
     {
       id: 3,
       title: "Community Platforms",
-      description:
-        "Private, moderated communication platforms for institutions, churches and member communities.",
-      status: "Coming soon",
+      description: "Centralizes community communication.",
+      status: "In development",
       statusColor: "orange",
+      hasKnowMore: true,
+      link: "/community"
     },
     {
       id: 4,
       title: "AgriTech Platforms",
-      description:
-        "Tools for agricultural operations, field teams and decision-makers working with on-ground realities.",
-      status: "Coming soon",
+      description: "Tools for agricultural operations, field teams and decision-makers working with on-ground realities.",
+      status: "In development",
       statusColor: "orange",
+      hasKnowMore: false
     },
     {
       id: 5,
       title: "GIS & Spatial Platforms",
-      description:
-        "Location-aware systems for mapping, spatial analytics and infrastructure planning.",
-      status: "Coming soon",
+      description: "Location-aware systems for mapping, spatial analytics and infrastructure planning.",
+      status: "In development",
       statusColor: "orange",
+      hasKnowMore: false
     },
   ];
 
@@ -60,7 +69,7 @@ export default function OurProducts() {
         background:
           "linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(187, 220, 252, 1) 50%, rgba(117, 167, 218, 1) 100%)",
       }}
-      className="w-full min-h-screen py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8"
+      className="w-full min-h-screen py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 font-sans"
     >
       <div className="max-w-7xl mx-auto">
         {/* Section Header - Our Platforms */}
@@ -79,30 +88,46 @@ export default function OurProducts() {
 
         {/* Products Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
-          {products.slice(0, 5).map((product) => (
+          {products.map((product) => (
             <div
               key={product.id}
-              className="bg-white rounded-2xl p-5 sm:p-6 shadow-lg hover:shadow-xl transition-shadow duration-300"
+              className="group bg-white rounded-2xl p-5 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col h-full"
             >
-              <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-2">
-                {product.title}
-              </h3>
-              <p className="text-xs sm:text-sm text-gray-600 mb-5 leading-relaxed">
-                {product.description}
-              </p>
-              <div className="flex items-center gap-2">
-                <div
-                  className={`w-2 h-2 rounded-full ${getStatusDot(
-                    product.statusColor
-                  )}`}
-                ></div>
-                <span
-                  className={`text-xs font-medium px-2 py-1 rounded-full ${getStatusStyles(
-                    product.statusColor
-                  )}`}
-                >
-                  {product.status}
-                </span>
+              <div className="flex-grow">
+                <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-2">
+                  {product.title}
+                </h3>
+                <p className="text-xs sm:text-sm text-gray-600 mb-5 leading-relaxed">
+                  {product.description}
+                </p>
+              </div>
+
+              <div className="flex items-center justify-between mt-auto">
+                <div className="flex items-center gap-2">
+                  <div
+                    className={`w-2 h-2 rounded-full ${getStatusDot(
+                      product.statusColor
+                    )}`}
+                  ></div>
+                  <span
+                    className={`text-xs font-medium px-2 py-1 rounded-full ${getStatusStyles(
+                      product.statusColor
+                    )}`}
+                  >
+                    {product.status}
+                  </span>
+                </div>
+
+                {/* Conditional "Know More" Button for Healthcare and Community */}
+                {product.hasKnowMore && (
+                  <a 
+                    href="#"
+                    className="inline-flex items-center gap-1 text-xs font-bold text-[#000783] hover:underline"
+                  >
+                    Know More
+                    <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                  </a>
+                )}
               </div>
             </div>
           ))}

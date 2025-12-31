@@ -89,10 +89,7 @@ export default function Hero() {
               </button>
             </div>
 
-            <p className="text-xs sm:text-sm text-gray-200 pt-2">
-              Trusted by hospitals, enterprises and mission-driven organizations
-              across India.
-            </p>
+          
           </div>
 
           <div className="h-[500px] lg:h-[600px] flex items-center justify-center relative w-full">

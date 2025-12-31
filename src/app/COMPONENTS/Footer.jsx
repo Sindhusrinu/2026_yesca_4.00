@@ -4,9 +4,9 @@ import { ArrowRight, Mail, Phone, MapPin } from "lucide-react";
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   const menuItems = [
-    { label: "View Products", href: "#" },
-    { label: "Technology Services", href: "#" },
-    { label: "Talk to Our Team", href: "#" },
+    { label: "Privacy Policy", href: "#" },
+    { label: "Terms and Conditions", href: "#" },
+    
   ];
 
   const address =
@@ -33,7 +33,7 @@ const Footer = () => {
             </p>
             <div className="flex space-x-4">
               <a
-                href="#"
+                href="https://www.linkedin.com/company/yescatechnologies/"
                 className="text-gray-400 hover:text-indigo-600 transition-colors"
               >
                 <svg
@@ -73,9 +73,7 @@ const Footer = () => {
 
           {/* Links */}
           <div>
-            <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-gray-500 mb-6">
-              Navigation
-            </h4>
+           
             <ul className="space-y-4">
               {menuItems.map((item, idx) => (
                 <li key={idx}>
