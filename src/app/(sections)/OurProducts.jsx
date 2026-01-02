@@ -16,7 +16,8 @@ export default function OurProducts() {
       status: "Early access",
       statusColor: "green",
       hasKnowMore: true,
-      link: "/healthcare"
+      link: "https://www.vaidya247.com/",
+      
     },
     {
       id: 2,
@@ -33,7 +34,7 @@ export default function OurProducts() {
       status: "In development",
       statusColor: "orange",
       hasKnowMore: true,
-      link: "/community"
+      link: "https://webasic.org/"
     },
     {
       id: 4,
@@ -41,7 +42,7 @@ export default function OurProducts() {
       description: "Tools for agricultural operations, field teams and decision-makers working with on-ground realities.",
       status: "In development",
       statusColor: "orange",
-      hasKnowMore: false
+      hasKnowMore: true
     },
     {
       id: 5,
@@ -93,6 +94,7 @@ export default function OurProducts() {
               key={product.id}
               className="group bg-white rounded-2xl p-5 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col h-full"
             >
+              
               <div className="flex-grow">
                 <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-2">
                   {product.title}
@@ -121,13 +123,15 @@ export default function OurProducts() {
                 {/* Conditional "Know More" Button for Healthcare and Community */}
                 {product.hasKnowMore && (
                   <a 
-                    href="#"
-                    className="inline-flex items-center gap-1 text-xs font-bold text-[#000783] hover:underline"
-                  >
+                    href={product.link || "#"}
+                    target={product.link?.startsWith('http') ? "_blank" : "_self"}
+                    rel={product.link?.startsWith('http') ? "noopener noreferrer" : ""}
+                    className="inline-flex items-center gap-1 text-sm font-bold text-[#000783] hover:underline transition-all"
+                  > 
                     Know More
-                    <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                    <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform" />
                   </a>
-                )}
+                )}    
               </div>
             </div>
           ))}

@@ -84,12 +84,15 @@ export default function Hero() {
               <button className="bg-orange-500 hover:bg-orange-600 text-white font-semibold px-6 py-2.5 rounded-full transition-colors duration-300 text-center text-sm sm:text-base">
                 View our products
               </button>
-              <button className="border-2 border-gray-300 hover:border-white text-white font-semibold px-6 py-2.5 rounded-full transition-colors duration-300 text-center text-sm sm:text-base">
+              <a 
+                href="/contact"
+                className="border-2 border-gray-300 hover:border-white text-white font-semibold px-6 py-2.5 rounded-full transition-colors duration-300 text-center text-sm sm:text-base inline-block"
+              >
                 Talk to our team
-              </button>
+              </a>  
             </div>
 
-          
+            
           </div>
 
           <div className="h-[500px] lg:h-[600px] flex items-center justify-center relative w-full">
