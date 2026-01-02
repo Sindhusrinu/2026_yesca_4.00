@@ -134,6 +134,7 @@ export default function Clients() {
     e.target.style.display = "none";
     if (e.target.nextSibling) {
       e.target.nextSibling.style.display = "block";
+      
     }
   };
 
