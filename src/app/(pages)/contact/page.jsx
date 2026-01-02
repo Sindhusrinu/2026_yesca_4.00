@@ -1,6 +1,14 @@
 "use client";
+
 import React, { useState } from "react";
 
+/**
+ * App Component for YESCA Technologies
+ * Features:
+ * 1. Controlled form state for all contact fields.
+ * 2. Form submission via mailto:contact@yesca.in.
+ * 3. Responsive Tailwind CSS design.
+ */
 export default function App() {
   const [formData, setFormData] = useState({
     fullName: "",
@@ -13,228 +21,213 @@ export default function App() {
     message: "",
   });
 
-  const [loading, setLoading] = useState(false);
-  const [status, setStatus] = useState("");
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
-  function handleChange(e) {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  }
-
-  async function handleSubmit(e) {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    setLoading(true);
-    setStatus("");
+    
+    const recipient = "contact@yesca.in";
+    const subjectLine = formData.subject || `New Inquiry from ${formData.fullName}`;
+    
+    // Constructing a clean text body for the email
+    const bodyContent = `
+New Contact Form Submission:
+---------------------------
+Name: ${formData.fullName}
+Email: ${formData.email}
+Phone: ${formData.phone || "N/A"}
+Company: ${formData.company || "N/A"}
+Reason: ${formData.reason}
+Preferred Method: ${formData.contactMethod}
 
-    try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
+Message:
+${formData.message}
+    `.trim();
 
-      const data = await res.json();
-
-      if (data.success) {
-        setStatus("Message sent successfully.");
-        setFormData({
-          fullName: "",
-          email: "",
-          phone: "",
-          company: "",
-          subject: "",
-          reason: "",
-          contactMethod: "",
-          message: "",
-        });
-      } else {
-        setStatus("Failed to send message.");
-      }
-    } catch (error) {
-      setStatus("Something went wrong.");
-    } finally {
-      setLoading(false);
-    }
-  }
+    // Opening the mail client
+    const mailtoUrl = `mailto:${recipient}?subject=${encodeURIComponent(subjectLine)}&body=${encodeURIComponent(bodyContent)}`;
+    window.location.href = mailtoUrl;
+  };
 
   return (
-    <div className="min-h-screen flex flex-col justify-between bg-white">
-      <header className="flex items-center justify-between px-10 py-6">
+    <div className="min-h-screen bg-[#F6F8FC] font-sans text-slate-900 selection:bg-indigo-100">
+      {/* Top Navigation Bar */}
+      <header className="w-full flex items-center justify-between px-6 py-5 md:px-12 bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-gray-100">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold">
+          <div className="w-8 h-8 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold text-sm shadow-sm">
             Y
           </div>
-          <span className="font-semibold text-gray-900">
+          <span className="font-bold text-lg tracking-tight text-gray-900">
             YESCA Technologies
           </span>
         </div>
 
-        <div className="flex gap-6 text-sm text-gray-500">
-          <a href="#" className="hover:text-gray-800">
+        <nav className="flex gap-6 text-sm font-semibold text-gray-500">
+          <a href="#" className="hover:text-indigo-600 transition-colors">
             Back to Home
           </a>
-          <a href="#" className="hover:text-gray-800">
+          <a href="#" className="hover:text-indigo-600 transition-colors">
             View Products
           </a>
-        </div>
+        </nav>
       </header>
 
-      <main className="flex justify-center px-4">
-        <div className="w-full max-w-3xl">
-          <h1 className="text-3xl font-semibold text-center text-gray-900">
+      {/* Main Content Area */}
+      <main className="max-w-7xl mx-auto px-6 py-16 md:py-24 flex flex-col items-center">
+        {/* Page Heading */}
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-bold text-gray-900 mb-4 tracking-tight">
             Contact us
           </h1>
-
-          <p className="text-center text-gray-500 mt-3 text-sm">
-            Fill out the form below and our team will follow up within one
-            business day. For urgent support, please use your product support
-            channels.
+          <p className="text-gray-500 text-lg max-w-lg mx-auto leading-relaxed">
+            Have questions about our products or need a custom solution? 
+            Our team is here to help you scale your operations.
           </p>
+        </div>
 
-          <div className="mt-12">
-            <h2 className="font-medium text-gray-900 mb-6">Send a message</h2>
+        {/* Form Card */}
+        <div className="w-full max-w-3xl bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 overflow-hidden">
+          <div className="p-8 md:p-12">
+            <h2 className="text-xl font-bold text-gray-900 mb-8">
+              Send a message
+            </h2>
 
             <form className="space-y-6" onSubmit={handleSubmit}>
+              {/* Grid: Full Name & Email */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm text-gray-600 mb-2">
-                    Full name
-                  </label>
+                <div className="space-y-1.5">
+                  <label className="text-sm font-semibold text-gray-700">Full name</label>
                   <input
-                    name="fullName"
+                    required
                     type="text"
+                    name="fullName"
+                    placeholder="e.g. Alex Rivera"
                     value={formData.fullName}
                     onChange={handleChange}
-                    required
-                    className="w-full rounded-lg bg-gray-100 border border-transparent px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition-all placeholder:text-gray-300 bg-white"
                   />
                 </div>
-
-                <div>
-                  <label className="block text-sm text-gray-600 mb-2">
-                    Work email
-                  </label>
+                <div className="space-y-1.5">
+                  <label className="text-sm font-semibold text-gray-700">Work email</label>
                   <input
-                    name="email"
+                    required
                     type="email"
+                    name="email"
+                    placeholder="alex@company.com"
                     value={formData.email}
                     onChange={handleChange}
-                    required
-                    className="w-full rounded-lg bg-gray-100 border border-transparent px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition-all placeholder:text-gray-300 bg-white"
                   />
                 </div>
               </div>
 
+              {/* Grid: Phone & Company */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm text-gray-600 mb-2">
-                    Phone number (optional)
-                  </label>
+                <div className="space-y-1.5">
+                  <label className="text-sm font-semibold text-gray-700">Phone number (optional)</label>
                   <input
+                    type="tel"
                     name="phone"
-                    type="text"
+                    placeholder="+1 (555) 000-0000"
                     value={formData.phone}
                     onChange={handleChange}
-                    className="w-full rounded-lg bg-gray-100 border border-transparent px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition-all placeholder:text-gray-300 bg-white"
                   />
                 </div>
-
-                <div>
-                  <label className="block text-sm text-gray-600 mb-2">
-                    Company / Hospital
-                  </label>
+                <div className="space-y-1.5">
+                  <label className="text-sm font-semibold text-gray-700">Company / Hospital</label>
                   <input
-                    name="company"
                     type="text"
+                    name="company"
+                    placeholder="Organization name"
                     value={formData.company}
                     onChange={handleChange}
-                    className="w-full rounded-lg bg-gray-100 border border-transparent px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition-all placeholder:text-gray-300 bg-white"
                   />
                 </div>
               </div>
 
-              <div>
-                <label className="block text-sm text-gray-600 mb-2">
-                  Subject
-                </label>
+              {/* Subject (Full Width) */}
+              <div className="space-y-1.5">
+                <label className="text-sm font-semibold text-gray-700">Subject</label>
                 <input
-                  name="subject"
+                  required
                   type="text"
+                  name="subject"
+                  placeholder="How can we help?"
                   value={formData.subject}
                   onChange={handleChange}
-                  className="w-full rounded-lg bg-gray-100 border border-transparent px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition-all placeholder:text-gray-300 bg-white"
                 />
               </div>
 
+              {/* Grid: Reason & Method (Selects) */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm text-gray-600 mb-2">
-                    Reason for contact
-                  </label>
-                  <input
+                <div className="space-y-1.5">
+                  <label className="text-sm font-semibold text-gray-700">Reason for contact</label>
+                  <select
+                    required
                     name="reason"
-                    type="text"
                     value={formData.reason}
                     onChange={handleChange}
-                    className="w-full rounded-lg bg-gray-100 border border-transparent px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                  />
+                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition-all bg-white text-gray-600 cursor-pointer appearance-none"
+                    style={{ backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e")`, backgroundPosition: 'right 1rem center', backgroundRepeat: 'no-repeat', backgroundSize: '1.5em 1.5em' }}
+                  >
+                    <option value="">Select a reason</option>
+                    <option value="sales">Sales Inquiry</option>
+                    <option value="support">Technical Support</option>
+                    <option value="partnership">Partnership</option>
+                    <option value="other">Other</option>
+                  </select>
                 </div>
-
-                <div>
-                  <label className="block text-sm text-gray-600 mb-2">
-                    Preferred contact method
-                  </label>
-                  <input
+                <div className="space-y-1.5">
+                  <label className="text-sm font-semibold text-gray-700">Preferred contact method</label>
+                  <select
+                    required
                     name="contactMethod"
-                    type="text"
                     value={formData.contactMethod}
                     onChange={handleChange}
-                    className="w-full rounded-lg bg-gray-100 border border-transparent px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                  />
+                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition-all bg-white text-gray-600 cursor-pointer appearance-none"
+                    style={{ backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e")`, backgroundPosition: 'right 1rem center', backgroundRepeat: 'no-repeat', backgroundSize: '1.5em 1.5em' }}
+                  >
+                    <option value="">Select method</option>
+                    <option value="email">Email</option>
+                    <option value="phone">Phone Call</option>
+                    <option value="whatsapp">WhatsApp</option>
+                  </select>
                 </div>
               </div>
 
-              <div>
-                <label className="block text-sm text-gray-600 mb-2">
-                  Your message
-                </label>
+              {/* Message Textarea */}
+              <div className="space-y-1.5">
+                <label className="text-sm font-semibold text-gray-700">Message</label>
                 <textarea
+                  required
                   name="message"
-                  rows={5}
+                  rows={4}
+                  placeholder="Tell us about your requirements..."
                   value={formData.message}
                   onChange={handleChange}
-                  required
-                  className="w-full rounded-lg bg-gray-100 border border-transparent px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition-all placeholder:text-gray-300 bg-white resize-none"
                 />
               </div>
 
-              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                <p className="text-xs text-gray-400 max-w-md">
-                  By submitting, you agree that YESCA Technologies may contact
-                  you about products, services, and updates. You can opt out at
-                  any time.
-                </p>
-
+              {/* Submit Button */}
+              <div className="flex justify-end pt-4">
                 <button
                   type="submit"
-                  disabled={loading}
-                  className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-full text-sm font-medium"
+                  className="bg-indigo-600 hover:bg-indigo-700 text-white px-10 py-3.5 rounded-full font-bold text-base transition-all active:scale-95 shadow-lg shadow-indigo-600/20 flex items-center gap-2 group"
                 >
-                  {loading ? "Sending..." : "Send message"}
+                  Send message
                 </button>
               </div>
-
-              {status && (
-                <p className="text-sm text-center text-gray-500">{status}</p>
-              )}
             </form>
           </div>
         </div>
       </main>
-
-      <footer className="flex items-center justify-between px-10 py-6 text-sm text-gray-400"></footer>
     </div>
   );
 }
